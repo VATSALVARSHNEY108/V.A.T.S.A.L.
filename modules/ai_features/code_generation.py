@@ -1,8 +1,3 @@
-"""
-Code Templates for Common Programming Problems
-Provides instant code generation without API calls
-"""
-
 PYTHON_TEMPLATES = {
     "palindrome": '''def is_palindrome(text):
     """
@@ -419,16 +414,6 @@ if __name__ == "__main__":
 
 
 def get_template_code(problem_keywords, language="python"):
-    """
-    Get template code for common programming problems.
-
-    Args:
-        problem_keywords: Description or keywords of the problem.
-        language: Programming language (currently only Python supported).
-
-    Returns:
-        Template code if available, None otherwise.
-    """
     if language.lower() != "python":
         return None
 
@@ -460,19 +445,10 @@ def get_template_code(problem_keywords, language="python"):
 
 
 def list_available_templates():
-    """
-    List all available code templates.
-
-    Returns:
-        List of available template names.
-    """
     return list(PYTHON_TEMPLATES.keys())
 
 
-"""
-Letter Templates Module
-Provides instant letter generation with customizable variables
-"""
+
 
 from datetime import datetime
 
@@ -899,7 +875,6 @@ DEFAULT_VALUES = {
 
 
 def detect_letter_type(description: str) -> str:
-    """Detect letter type from user description"""
     description_lower = description.lower()
 
     letter_keywords = {
@@ -926,7 +901,6 @@ def detect_letter_type(description: str) -> str:
 
 
 def extract_custom_values(description: str) -> dict:
-    """Extract custom values from user's natural language description"""
     custom_values = {}
     description_lower = description.lower()
 
@@ -966,16 +940,6 @@ def extract_custom_values(description: str) -> dict:
 
 
 def generate_letter(description: str, custom_values: dict = None) -> dict:
-    """
-    Generate a letter based on description
-
-    Args:
-        description: Natural language description of the letter needed
-        custom_values: Dictionary of custom values to override defaults
-
-    Returns:
-        dict with letter content and metadata
-    """
     letter_type = detect_letter_type(description)
 
     if letter_type not in LETTER_TEMPLATES:
@@ -1018,7 +982,6 @@ def generate_letter(description: str, custom_values: dict = None) -> dict:
 
 
 def list_letter_types():
-    """List all available letter types"""
     return {
         letter_type: info["name"]
         for letter_type, info in LETTER_TEMPLATES.items()
@@ -1026,14 +989,12 @@ def list_letter_types():
 
 
 def get_letter_variables(letter_type: str) -> list:
-    """Get required variables for a specific letter type"""
     if letter_type in LETTER_TEMPLATES:
         return LETTER_TEMPLATES[letter_type]["variables"]
     return []
 
 
 def show_letter_preview(letter_type: str) -> str:
-    """Show a preview of a letter type with default values"""
     if letter_type not in LETTER_TEMPLATES:
         return f"Letter type '{letter_type}' not found"
 
@@ -1057,10 +1018,6 @@ if __name__ == "__main__":
     if result["success"]:
         print(result["letter"])
         print(f"\n✅ Letter type detected: {result['letter_type']}")
-"""
-AI Code Generator Module
-Handles intelligent code generation for multiple programming languages
-"""
 
 import os
 from google import genai
@@ -1070,7 +1027,6 @@ client = None
 
 
 def get_client():
-    """Get or initialize the Gemini client"""
     global client
     if client is None:
         api_key = os.environ.get("GEMINI_API_KEY")
@@ -1135,7 +1091,6 @@ LANGUAGE_TEMPLATES = {
 
 
 def is_letter_request(description: str) -> bool:
-    """Check if the description is requesting a letter"""
     description_lower = description.lower()
 
     # Strong letter indicators
@@ -1164,7 +1119,6 @@ def is_letter_request(description: str) -> bool:
 
 
 def detect_language_from_description(description: str) -> str:
-    """Detect programming language from description"""
     description_lower = description.lower()
 
     language_keywords = {
@@ -1188,7 +1142,6 @@ def detect_language_from_description(description: str) -> str:
 
 
 def clean_code_output(code: str) -> str:
-    """Remove markdown code blocks and clean up the output"""
     code = code.strip()
 
     if code.startswith("```"):
@@ -1206,17 +1159,6 @@ def clean_code_output(code: str) -> str:
 
 
 def generate_code(description: str, language: str | None = None) -> dict:
-    """
-    Generate code using templates (fast) or Gemini AI (fallback)
-    Also handles letter generation requests
-
-    Args:
-        description: What the code should do or letter to write
-        language: Programming language (auto-detected if not provided)
-
-    Returns:
-        dict with code/letter, language, and metadata
-    """
     # Check if this is a letter request
     if is_letter_request(description):
         letter_result = generate_letter(description)
@@ -1326,7 +1268,6 @@ Generate the {language} code now:"""
 
 
 def generate_multiple_versions(description: str, language: str | None = None, count: int = 1) -> list:
-    """Generate multiple versions of code for comparison"""
     versions = []
 
     for i in range(count):
@@ -1338,7 +1279,6 @@ def generate_multiple_versions(description: str, language: str | None = None, co
 
 
 def explain_code(code: str, language: str = "python") -> str:
-    """Generate explanation for existing code"""
     prompt = f"""Explain the following {language} code in simple terms:
 
 {code}
@@ -1367,7 +1307,6 @@ Provide a clear, beginner-friendly explanation of:
 
 
 def improve_code(code: str, language: str = "python") -> dict:
-    """Suggest improvements for existing code"""
     prompt = f"""Analyze this {language} code and provide an improved version:
 
 {code}
@@ -1414,7 +1353,6 @@ Return ONLY the improved code, no explanations."""
 
 
 def debug_code(code: str, error_message: str, language: str = "python") -> dict:
-    """Debug code and fix errors"""
     prompt = f"""Fix the following {language} code that has this error:
 
 ERROR: {error_message}
@@ -1454,3 +1392,4 @@ Provide the corrected code with the bug fixed. Return ONLY the fixed code."""
         "success": False,
         "error": "All models failed to debug code"
     }
+
