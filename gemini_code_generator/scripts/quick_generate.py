@@ -1,13 +1,3 @@
-"""
-⚡ QUICK CONTENT GENERATOR
-One-line content generation - super simple!
-
-Usage:
-    python quick_generate.py "write a story about a brave cat"
-    python quick_generate.py "write python code to add numbers"
-    python quick_generate.py "write a thank you letter"
-"""
-
 import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -21,8 +11,6 @@ import time
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 def quick_generate(description):
-    """Generate and write to Notepad in one go!"""
-
     desc_lower = description.lower()
 
     # Check for POEM first
@@ -94,3 +82,4 @@ if __name__ == "__main__":
     else:
         description = input("What do you want to create? ")
         quick_generate(description)
+
