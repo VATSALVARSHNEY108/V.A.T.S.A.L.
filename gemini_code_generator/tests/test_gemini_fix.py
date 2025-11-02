@@ -1,8 +1,3 @@
-"""
-Test script to verify Gemini 404 fix is working
-This will test the new multi-model fallback system
-"""
-
 from code_generator import generate_code, explain_code, improve_code
 import sys
 
@@ -12,7 +7,6 @@ def print_header(text):
     print("="*70)
 
 def test_generate_code():
-    """Test code generation with new models"""
     print_header("TEST 1: Code Generation")
     
     # Test with template (should be instant)
@@ -106,7 +100,6 @@ def add(a, b):
         return False
 
 def main():
-    """Run all tests"""
     print("\n" + "="*70)
     print("  🧪 GEMINI 404 FIX - VERIFICATION TESTS")
     print("="*70)
