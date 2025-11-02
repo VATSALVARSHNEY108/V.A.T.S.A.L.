@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Enhanced VATSAL Chatbot - Powered by Google Gemini AI
-A conversational AI that can both chat AND execute actual automation commands
-"""
-
 import os
 from datetime import datetime
 from dotenv import load_dotenv
@@ -16,8 +10,6 @@ load_dotenv()
 
 
 class SimpleChatbot:
-    """Enhanced chatbot using Gemini AI with command execution capabilities"""
-
     def __init__(self):
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -82,7 +74,6 @@ Guidelines:
         return any(keyword in message_lower for keyword in command_keywords)
 
     def chat(self, user_message):
-        """Send a message and get AI response, executing commands when needed"""
         try:
             self.conversation_history.append({
                 "role": "user",
@@ -169,12 +160,10 @@ Guidelines:
             return f"Sorry, I encountered an error: {str(e)}"
 
     def reset(self):
-        """Clear conversation history"""
         self.conversation_history = []
         return "Conversation reset! Let's start fresh."
 
     def greeting(self):
-        """Get a greeting message"""
         hour = datetime.now().hour
 
         if 5 <= hour < 12:
@@ -194,8 +183,6 @@ Guidelines:
 
 
 def main():
-    """Run the enhanced chatbot"""
-
     print("\n" + "=" * 60)
     print("🤖 VATSAL AI Assistant")
     print("=" * 60)
@@ -468,3 +455,4 @@ if st.session_state.messages:
         if st.button("🗑️ Clear Chat", use_container_width=True):
             st.session_state.messages = []
             st.rerun()
+
