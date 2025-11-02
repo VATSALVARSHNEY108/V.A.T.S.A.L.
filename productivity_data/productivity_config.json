@@ -1,0 +1,18 @@
+{
+  "block_distractions_enabled": false,
+  "block_after_hours": "22:00",
+  "reminders": {
+    "water": {
+      "enabled": true,
+      "interval_minutes": 30
+    },
+    "break": {
+      "enabled": true,
+      "interval_minutes": 60
+    },
+    "posture": {
+      "enabled": true,
+      "interval_minutes": 45
+    }
+  }
+}

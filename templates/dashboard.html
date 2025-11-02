@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 VATSAL - Real-Time Dashboard</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: #44ff44;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .activity-feed {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border-left: 3px solid #667eea;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .activity-item.completed {
+            border-left-color: #44ff44;
+        }
+
+        .activity-item.failed {
+            border-left-color: #ff4444;
+        }
+
+        .activity-item.pending {
+            border-left-color: #ffaa44;
+        }
+
+        .activity-time {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .activity-command {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .activity-result {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: rgba(102, 126, 234, 0.9);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInRight 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .notification.info {
+            background: rgba(102, 126, 234, 0.9);
+        }
+
+        .notification.success {
+            background: rgba(68, 255, 68, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 170, 68, 0.9);
+        }
+
+        .notification.error {
+            background: rgba(255, 68, 68, 0.9);
+        }
+
+        .command-input-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .command-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-button:hover {
+            transform: scale(1.02);
+        }
+
+        .send-button:active {
+            transform: scale(0.98);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 VATSAL Real-Time Dashboard</h1>
+            <div class="connection-status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="connectionStatus">Connecting...</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-title">💻 CPU Usage</div>
+                <div class="stat-value" id="cpuValue">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="cpuProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🧠 Memory Usage</div>
+                <div class="stat-value" id="memoryValue">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="memoryProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">💾 Disk Usage</div>
+                <div class="stat-value" id="diskValue">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="diskProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">👥 Connected Clients</div>
+                <div class="stat-value" id="clientsValue">0</div>
+            </div>
+        </div>
+
+        <div class="command-input-section">
+            <h2 style="margin-bottom: 15px;">💬 Send Command</h2>
+            <input type="text" class="command-input" id="commandInput" placeholder="Type a command (e.g., 'Take screenshot', 'Show system info')">
+            <button class="send-button" onclick="sendCommand()">🚀 Send Command</button>
+        </div>
+
+        <div class="activity-feed">
+            <h2 style="margin-bottom: 20px;">📊 Activity Feed</h2>
+            <div id="activityFeed">
+                <div class="activity-item">
+                    <div class="activity-time">Waiting for events...</div>
+                    <div class="activity-command">Real-time updates will appear here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let isConnected = false;
+
+        socket.on('connect', () => {
+            isConnected = true;
+            updateConnectionStatus(true);
+            console.log('Connected to WebSocket server');
+        });
+
+        socket.on('disconnect', () => {
+            isConnected = false;
+            updateConnectionStatus(false);
+            console.log('Disconnected from WebSocket server');
+        });
+
+        socket.on('connection_response', (data) => {
+            console.log('Connection response:', data);
+            showNotification('Connected', data.message, 'success');
+        });
+
+        socket.on('system_stats', (data) => {
+            updateSystemStats(data);
+        });
+
+        socket.on('command_update', (data) => {
+            addActivityItem(data);
+        });
+
+        socket.on('command_history', (data) => {
+            console.log('Received command history:', data);
+            if (data.history && data.history.length > 0) {
+                document.getElementById('activityFeed').innerHTML = '';
+                data.history.forEach(item => addActivityItem(item));
+            }
+        });
+
+        socket.on('notification', (data) => {
+            showNotification(data.title, data.message, data.level);
+        });
+
+        socket.on('system_event', (data) => {
+            console.log('System event:', data);
+            showNotification('System Event', `${data.event_type}: ${JSON.stringify(data.data)}`, 'info');
+        });
+
+        function updateConnectionStatus(connected) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('connectionStatus');
+            
+            if (connected) {
+                statusDot.classList.add('connected');
+                statusText.textContent = 'Connected';
+            } else {
+                statusDot.classList.remove('connected');
+                statusText.textContent = 'Disconnected';
+            }
+        }
+
+        function updateSystemStats(stats) {
+            document.getElementById('cpuValue').textContent = stats.cpu + '%';
+            document.getElementById('cpuProgress').style.width = stats.cpu + '%';
+            
+            document.getElementById('memoryValue').textContent = stats.memory + '%';
+            document.getElementById('memoryProgress').style.width = stats.memory + '%';
+            
+            document.getElementById('diskValue').textContent = stats.disk + '%';
+            document.getElementById('diskProgress').style.width = stats.disk + '%';
+        }
+
+        function addActivityItem(data) {
+            const feed = document.getElementById('activityFeed');
+            const item = document.createElement('div');
+            item.className = `activity-item ${data.status}`;
+            
+            const time = new Date(data.timestamp).toLocaleTimeString();
+            
+            item.innerHTML = `
+                <div class="activity-time">${time}</div>
+                <div class="activity-command">📝 ${data.command}</div>
+                <div class="activity-result">Status: ${data.status.toUpperCase()}${data.result ? ' - ' + data.result : ''}</div>
+            `;
+            
+            feed.insertBefore(item, feed.firstChild);
+            
+            if (feed.children.length > 50) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        function showNotification(title, message, level = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${level}`;
+            notification.innerHTML = `
+                <strong>${title}</strong><br>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function sendCommand() {
+            const input = document.getElementById('commandInput');
+            const command = input.value.trim();
+            
+            if (command && isConnected) {
+                socket.emit('execute_command', { command: command });
+                input.value = '';
+                showNotification('Command Sent', `Executing: ${command}`, 'info');
+            } else if (!isConnected) {
+                showNotification('Error', 'Not connected to server', 'error');
+            }
+        }
+
+        document.getElementById('commandInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendCommand();
+            }
+        });
+
+        setInterval(() => {
+            if (isConnected) {
+                socket.emit('ping', { timestamp: new Date().toISOString() });
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

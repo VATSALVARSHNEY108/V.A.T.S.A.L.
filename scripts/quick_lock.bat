@@ -1,0 +1,3 @@
+@echo off
+echo 🔒 Locking screen...
+rundll32.exe user32.dll,LockWorkStation

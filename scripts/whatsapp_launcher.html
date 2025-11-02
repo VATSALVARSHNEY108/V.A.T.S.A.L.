@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Desktop Launcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #25D366;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-align: center;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #25D366;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 15px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        .button:hover {
+            background: #128C7E;
+        }
+        
+        .button.secondary {
+            background: #34B7F1;
+        }
+        
+        .button.secondary:hover {
+            background: #1E96C8;
+        }
+        
+        .note {
+            background: #FFF3CD;
+            border: 1px solid #FFE69C;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #856404;
+            font-size: 14px;
+        }
+        
+        .note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💬 WhatsApp Desktop</h1>
+        <p>Open WhatsApp Desktop directly from your browser</p>
+        
+        <div class="input-group">
+            <label for="phone">Phone Number (with country code)</label>
+            <input 
+                type="text" 
+                id="phone" 
+                placeholder="+1234567890"
+                pattern="[+][0-9]+"
+            >
+        </div>
+        
+        <div class="input-group">
+            <label for="message">Message (optional)</label>
+            <textarea 
+                id="message" 
+                placeholder="Type your message here..."
+            ></textarea>
+        </div>
+        
+        <button class="button" onclick="openWhatsAppDesktop()">
+            📱 Open WhatsApp Desktop
+        </button>
+        
+        <button class="button secondary" onclick="openWhatsAppOnly()">
+            🚀 Just Open WhatsApp (No Chat)
+        </button>
+        
+        <div class="note">
+            <strong>📌 Note:</strong>
+            • Make sure WhatsApp Desktop is installed<br>
+            • Phone number must include country code (e.g., +1 for USA)<br>
+            • Your browser may ask for permission to open WhatsApp
+        </div>
+    </div>
+
+    <script>
+        function openWhatsAppDesktop() {
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!phone) {
+                alert('Please enter a phone number!');
+                return;
+            }
+            
+            // Remove spaces, dashes, and + from phone number
+            const cleanPhone = phone.replace(/[\s\-+]/g, '');
+            
+            // Build WhatsApp URL using wa.me (works better with Desktop)
+            let url = `https://wa.me/${cleanPhone}`;
+            
+            if (message) {
+                const encodedMessage = encodeURIComponent(message);
+                url += `?text=${encodedMessage}`;
+            }
+            
+            // Open in new tab - will redirect to WhatsApp Desktop if installed
+            window.open(url, '_blank');
+            
+            console.log('Opening WhatsApp with URL:', url);
+        }
+        
+        function openWhatsAppOnly() {
+            // Open WhatsApp Web which will offer to open Desktop
+            window.open('https://web.whatsapp.com', '_blank');
+            console.log('Opening WhatsApp Web');
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('message').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && event.ctrlKey) {
+                openWhatsAppDesktop();
+            }
+        });
+    </script>
+</body>
+</html>
