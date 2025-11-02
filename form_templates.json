@@ -1,0 +1,15 @@
+{
+  "job_application": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890",
+    "address": "123 Main St",
+    "linkedin": "linkedin.com/in/johndoe"
+  },
+  "contact_form": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "subject": "General Inquiry",
+    "message": "Hello, I would like to..."
+  }
+}

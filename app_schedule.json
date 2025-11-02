@@ -1,0 +1,20 @@
+{
+  "morning_routine": {
+    "enabled": true,
+    "time": "09:00",
+    "apps": [
+      "chrome",
+      "vscode",
+      "slack"
+    ]
+  },
+  "work_start": {
+    "enabled": false,
+    "time": "08:30",
+    "apps": [
+      "outlook",
+      "teams",
+      "excel"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "weather": {
+    "url": "https://wttr.in/?format=3",
+    "description": "Get current weather"
+  },
+  "crypto": {
+    "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+    "description": "Get Bitcoin price"
+  }
+}

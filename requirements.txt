@@ -1,0 +1,170 @@
+# Python 3.13+ Requirements
+# Core Dependencies
+cryptography>=43.0.3
+google-genai>=1.0.0
+psutil>=6.1.0
+pyautogui>=0.9.54
+pyperclip>=1.9.0
+python-dotenv>=1.0.1
+pyttsx3>=2.98
+pywhatkit>=5.4
+requests>=2.32.3
+sift-stack-py>=0.9.1
+speechrecognition>=3.14.0
+watchdog>=6.0.0
+
+# Web Framework & WebSocket
+Flask>=3.1.2
+flask-cors>=6.0.1
+Flask-SocketIO>=5.5.1
+python-socketio>=5.14.3
+python-engineio>=4.12.3
+websockets>=14.2
+websocket-client>=1.9.0
+websockify>=0.13.0
+
+# Data Science & Analysis
+pandas>=2.3.3
+numpy>=2.2.6
+scipy>=1.16.2
+scikit-learn>=1.7.2
+matplotlib>=3.10.7
+seaborn>=0.13.2
+statsmodels>=0.14.5
+
+# Computer Vision
+opencv-python>=4.12.0.88
+opencv-contrib-python>=4.12.0.88
+pillow>=11.3.0
+
+# Web Automation & Scraping
+selenium>=4.38.0
+beautifulsoup4>=4.14.2
+webdriver-manager>=4.0.2
+
+# UI & Visualization
+streamlit>=1.40.2
+altair>=5.5.0
+pydeck>=0.9.1
+
+# Gaming & Graphics
+pygame>=2.6.1
+
+# AI & ML
+elevenlabs>=2.21.0
+nltk>=3.9.2
+
+# Security & Authentication
+pyotp>=2.9.0
+qrcode>=8.2
+
+# Database & Data Storage
+redis>=7.0.1
+openpyxl>=3.1.5
+
+# Async & Network
+eventlet>=0.40.3
+trio>=0.31.0
+trio-websocket>=0.12.2
+httpx>=0.28.1
+dnspython>=2.8.0
+
+# Utilities
+alive-progress>=3.3.0
+click>=8.3.0
+python-dateutil>=2.9.0.post0
+PyYAML>=6.0.3
+toml>=0.10.2
+tqdm>=4.67.1
+wikipedia>=1.4.0
+joblib>=1.5.2
+
+# Type Checking
+pydantic>=2.12.3
+typing_extensions>=4.15.0
+
+# Git Integration
+GitPython>=3.1.45
+
+# Google Auth
+google-auth>=2.41.1
+protobuf>=5.29.5
+
+# Other Dependencies
+about-time>=4.2.1
+annotated-types>=0.7.0
+anyio>=4.11.0
+attrs>=25.4.0
+bidict>=0.23.1
+blinker>=1.9.0
+cachetools>=5.5.2
+certifi>=2025.10.5
+cffi>=2.0.0
+charset-normalizer>=3.4.4
+contourpy>=1.3.3
+cycler>=0.12.1
+et_xmlfile>=2.0.0
+eval_type_backport>=0.2.2
+fonttools>=4.60.1
+gitdb>=4.0.12
+graphemeu>=0.7.2
+greenlet>=3.2.4
+grpcio>=1.76.0
+h11>=0.16.0
+httpcore>=1.0.9
+idna>=3.11
+itsdangerous>=2.2.0
+Jinja2>=3.1.6
+jsonschema>=4.25.1
+jsonschema-specifications>=2025.9.1
+jwcrypto>=1.5.6
+kiwisolver>=1.4.9
+markdown-it-py>=4.0.0
+MarkupSafe>=3.0.3
+mdurl>=0.1.2
+MouseInfo>=0.1.3
+narwhals>=2.9.0
+netifaces>=0.10.6
+outcome>=1.3.0.post0
+packaging>=24.2
+pandas-stubs>=2.3.2.250926
+patsy>=1.0.2
+pyarrow>=22.0.0
+pyasn1>=0.6.1
+pyasn1-modules>=0.4.2
+pycparser>=2.23
+pydantic-core>=2.41.4
+PyGetWindow>=0.0.9
+Pygments>=2.19.2
+PyMsgBox>=2.0.1
+pyparsing>=3.2.5
+PyRect>=0.2.0
+PyScreeze>=1.0.1
+PySocks>=1.7.1
+python3-xlib>=0.15
+pytweening>=1.2.0
+pytz>=2025.2
+referencing>=0.37.0
+regex>=2025.10.23
+requests-toolbelt>=1.0.0
+rich>=13.9.4
+rpds-py>=0.28.0
+rsa>=4.9.1
+simple-websocket>=1.1.0
+six>=1.17.0
+smmap>=5.0.2
+sniffio>=1.3.1
+sortedcontainers>=2.4.0
+soupsieve>=2.8
+tenacity>=9.1.2
+threadpoolctl>=3.6.0
+tornado>=6.5.2
+types-protobuf>=6.32.1.20250918
+types-pytz>=2025.2.0.20250809
+types-PyYAML>=6.0.12.20250915
+types-requests>=2.32.4.20250913
+typing-inspection>=0.4.2
+tzdata>=2025.2
+urllib3>=2.5.0
+Werkzeug>=3.1.3
+wsproto>=1.2.0

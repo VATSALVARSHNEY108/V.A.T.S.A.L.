@@ -1,0 +1,19 @@
+{
+  "sleep_schedule": {
+    "enabled": false,
+    "time": "23:00"
+  },
+  "wake_schedule": {
+    "enabled": false,
+    "time": "07:00"
+  },
+  "auto_cleanup": {
+    "enabled": false,
+    "disk_limit": 90
+  },
+  "brightness_schedule": {
+    "enabled": false,
+    "day_brightness": 80,
+    "night_brightness": 30
+  }
+}

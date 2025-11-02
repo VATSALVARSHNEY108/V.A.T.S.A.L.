@@ -1,0 +1,18 @@
+{
+  "user_name": "Friend",
+  "conversation_history": [
+    {
+      "user": "ccomputer",
+      "timestamp": "2025-11-02T15:10:29.357776"
+    },
+    {
+      "user": "teri kya kar lunga",
+      "timestamp": "2025-11-02T15:18:49.311189"
+    },
+    {
+      "user": "oh my",
+      "timestamp": "2025-11-02T15:24:30.150144"
+    }
+  ],
+  "personality": "friendly"
+}
