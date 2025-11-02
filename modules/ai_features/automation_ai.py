@@ -1,8 +1,3 @@
-"""
-🤖 Advanced AI Automation
-Email summarizer, document generator, code review, and AI macro suggestions
-"""
-
 import json
 import os
 import re
@@ -34,8 +29,6 @@ except ImportError:
     create_predictive_actions_engine = None
 
 class AdvancedAIAutomation:
-    """Advanced AI-powered automation features"""
-
     def __init__(self):
         self.macros_file = "ai_macros.json"
         self.workflows_file = "visual_workflows.json"
@@ -73,7 +66,6 @@ class AdvancedAIAutomation:
         return []
 
     def save_workflows(self):
-        """Save workflows"""
         try:
             with open(self.workflows_file, 'w') as f:
                 json.dump(self.workflows, f, indent=2)
@@ -81,7 +73,6 @@ class AdvancedAIAutomation:
             print(f"Error saving workflows: {e}")
 
     def load_observed_patterns(self):
-        """Load observed action patterns"""
         if os.path.exists(self.observed_patterns_file):
             try:
                 with open(self.observed_patterns_file, 'r') as f:
@@ -91,7 +82,6 @@ class AdvancedAIAutomation:
         return []
 
     def save_observed_patterns(self):
-        """Save observed patterns"""
         try:
             with open(self.observed_patterns_file, 'w') as f:
                 json.dump(self.observed_patterns, f, indent=2)
@@ -99,7 +89,6 @@ class AdvancedAIAutomation:
             print(f"Error saving observed patterns: {e}")
 
     def summarize_email(self, email_content: str):
-        """Shorten long email threads into bullet points"""
         lines = email_content.split('\n')
 
         summary = []
@@ -124,7 +113,6 @@ class AdvancedAIAutomation:
         return output
 
     def generate_document(self, doc_type: str, topic: str, details: Dict = None):
-        """Auto-create reports, notes, or meeting summaries"""
         if details is None:
             details = {}
 
@@ -183,7 +171,6 @@ class AdvancedAIAutomation:
             return {"success": False, "message": f"Error creating document: {e}", "content": document}
 
     def review_code(self, code: str, language: str = "python"):
-        """Lint, optimize, and annotate code with inline comments"""
         review = f"\n🔍 CODE REVIEW ({language.upper()})\n"
         review += "="*60 + "\n\n"
 
@@ -220,7 +207,6 @@ class AdvancedAIAutomation:
         return review
 
     def build_workflow(self, workflow_name: str, steps: List[Dict]):
-        """Create a visual automation workflow"""
         workflow = {
             "name": workflow_name,
             "created": datetime.now().isoformat(),
@@ -234,7 +220,6 @@ class AdvancedAIAutomation:
         return {"success": True, "message": f"Workflow '{workflow_name}' created with {len(steps)} steps"}
 
     def list_workflows(self):
-        """List all visual workflows"""
         if not self.workflows:
             return "No workflows created yet."
 
@@ -252,7 +237,6 @@ class AdvancedAIAutomation:
         return output
 
     def suggest_macro(self, repeated_actions: List[str]):
-        """Observe repeated manual actions and suggest automation"""
         if len(repeated_actions) < 3:
             return {"success": False, "message": "Need at least 3 repeated actions to suggest a macro"}
 
@@ -277,7 +261,6 @@ class AdvancedAIAutomation:
         }
 
     def get_ai_connector_status(self):
-        """Status of AI app connector"""
         return {
             "success": True,
             "message": "AI App Connector ready",
@@ -287,22 +270,11 @@ class AdvancedAIAutomation:
 
 
 def create_advanced_ai_automation():
-    """Factory function to create an AdvancedAIAutomation instance"""
     return AdvancedAIAutomation()
 
 
 class AdvancedAIIntegration:
-    """
-    Integrates all advanced AI features into the GUI
-    """
-
     def __init__(self, gui_instance):
-        """
-        Initialize advanced AI systems
-
-        Args:
-            gui_instance: Reference to the main GUI application
-        """
         self.gui = gui_instance
 
         # Initialize Multi-Modal AI
@@ -354,7 +326,6 @@ class AdvancedAIIntegration:
             print("⚠️ Predictive Engine module not available")
 
     def append_output(self, text: str, tag: str = "info"):
-        """Append text to advanced AI output console"""
         if not hasattr(self.gui, 'advanced_ai_output'):
             return
 
@@ -364,7 +335,6 @@ class AdvancedAIIntegration:
         self.gui.advanced_ai_output.config(state='disabled')
 
     def analyze_screen(self):
-        """Analyze current screen with multi-modal AI"""
         if not self.multimodal_ai:
             self.append_output("❌ Multi-Modal AI not available\n", "error")
             return
@@ -398,7 +368,6 @@ class AdvancedAIIntegration:
         self.append_output("This will combine voice commands with screen analysis.\n", "info")
 
     def mm_statistics(self):
-        """Show multi-modal AI statistics"""
         if not self.multimodal_ai:
             self.append_output("❌ Multi-Modal AI not available\n", "error")
             return
@@ -417,7 +386,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def remember_something(self):
-        """Remember information"""
         if not self.contextual_memory:
             self.append_output("❌ Contextual Memory not available\n", "error")
             return
@@ -436,7 +404,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def recall_memories(self):
-        """Recall stored memories"""
         if not self.contextual_memory:
             self.append_output("❌ Contextual Memory not available\n", "error")
             return
@@ -457,7 +424,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def update_preferences(self):
-        """Update user preferences"""
         if not self.contextual_memory:
             self.append_output("❌ Contextual Memory not available\n", "error")
             return
@@ -477,7 +443,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def memory_statistics(self):
-        """Show memory statistics"""
         if not self.contextual_memory:
             self.append_output("❌ Contextual Memory not available\n", "error")
             return
@@ -502,7 +467,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def record_correction(self):
-        """Record a correction"""
         if not self.correction_learning:
             self.append_output("❌ Correction Learning not available\n", "error")
             return
@@ -532,7 +496,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def learning_report(self):
-        """Show learning report"""
         if not self.correction_learning:
             self.append_output("❌ Correction Learning not available\n", "error")
             return
@@ -563,7 +526,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def apply_learning(self):
-        """Apply learned corrections"""
         if not self.correction_learning:
             self.append_output("❌ Correction Learning not available\n", "error")
             return
@@ -588,7 +550,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def get_predictions(self):
-        """Get predicted next actions"""
         if not self.predictive_engine:
             self.append_output("❌ Predictive Engine not available\n", "error")
             return
@@ -612,7 +573,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def proactive_suggestions(self):
-        """Get proactive suggestions"""
         if not self.predictive_engine:
             self.append_output("❌ Predictive Engine not available\n", "error")
             return
@@ -634,7 +594,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def prediction_accuracy(self):
-        """Show prediction accuracy metrics"""
         if not self.predictive_engine:
             self.append_output("❌ Predictive Engine not available\n", "error")
             return
@@ -659,7 +618,6 @@ class AdvancedAIIntegration:
             self.append_output(f"❌ Error: {str(e)}\n", "error")
 
     def clear_output(self):
-        """Clear the advanced AI output console"""
         if hasattr(self.gui, 'advanced_ai_output'):
             self.gui.advanced_ai_output.config(state='normal')
             self.gui.advanced_ai_output.delete(1.0, tk.END)
@@ -669,3 +627,4 @@ class AdvancedAIIntegration:
 def create_advanced_ai_integration(gui_instance):
     """Factory function"""
     return AdvancedAIIntegration(gui_instance)
+
