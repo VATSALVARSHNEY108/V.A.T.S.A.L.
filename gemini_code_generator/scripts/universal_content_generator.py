@@ -1,9 +1,3 @@
-"""
-🌟 UNIVERSAL CONTENT GENERATOR
-Generates ANY type of content: Stories, Code, Letters, Poems, etc.
-Automatically writes to Notepad in full screen!
-"""
-
 import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -17,22 +11,21 @@ import time
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 def detect_content_type(description):
-    """Detect what type of content user wants"""
     desc_lower = description.lower()
 
     # Check for POEM first (before code) because "poem" is more specific
     if any(word in desc_lower for word in ['poem', 'poetry', 'verse', 'haiku', 'sonnet', 'rhyme']):
         return 'poem'
-    # Check for STORY
+    # STORY
     elif any(word in desc_lower for word in ['story', 'tale', 'narrative', 'once upon']):
         return 'story'
-    # Check for LETTER
+    # LETTER
     elif any(word in desc_lower for word in ['letter', 'email', 'application', 'resignation', 'complaint']):
         return 'letter'
-    # Check for CODE (only if they specifically ask for code/program/function)
+    # CODE (only if they specifically ask for code/program/function)
     elif any(word in desc_lower for word in ['code', 'program', 'function', 'script', 'algorithm', 'write python', 'write java', 'write javascript']):
         return 'code'
-    # Check for ESSAY
+    # ESSAY
     elif any(word in desc_lower for word in ['essay', 'article', 'blog']):
         return 'essay'
     else:
@@ -143,8 +136,6 @@ RULES:
     return prompts.get(content_type, prompts['general'])
 
 def generate_content(description):
-    """Generate ANY type of content based on description"""
-
     print(f"\n🤖 Analyzing your request: '{description}'")
 
     content_type = detect_content_type(description)
@@ -190,9 +181,7 @@ def generate_content(description):
             'error': str(e)
         }
 
-def write_to_notepad(content, fullscreen=True):
-    """Write content to Notepad in full screen"""
-
+def write_to_notepad(content, fullscreen=True):=
     print("\n📝 Opening Notepad...")
 
     try:
@@ -281,3 +270,4 @@ if __name__ == "__main__":
         print("\n\n👋 Interrupted. Goodbye!\n")
     except Exception as e:
         print(f"\n❌ Error: {e}\n")
+
