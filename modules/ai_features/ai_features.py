@@ -10,12 +10,6 @@ load_dotenv()
 
 
 class AIFeatures:
-    """
-    Comprehensive AI Features Module
-    Provides access to various AI capabilities including chatbots, text generation,
-    language processing, image generation, data analysis, computer vision, and voice/audio.
-    """
-
     def __init__(self):
         self.api_key = os.environ.get("GEMINI_API_KEY")
         self.client = None
@@ -26,7 +20,6 @@ class AIFeatures:
         self.conversation_history = self.load_conversation_history()
 
     def load_conversation_history(self) -> dict:
-        """Load conversation history from file"""
         if os.path.exists(self.conversation_history_file):
             try:
                 with open(self.conversation_history_file, 'r', encoding='utf-8') as f:
@@ -36,7 +29,6 @@ class AIFeatures:
         return {}
 
     def save_conversation_history(self):
-        """Save conversation history to file"""
         try:
             with open(self.conversation_history_file, 'w', encoding='utf-8') as f:
                 json.dump(self.conversation_history, f, indent=2, ensure_ascii=False)
@@ -44,7 +36,6 @@ class AIFeatures:
             print(f"Error saving conversation history: {e}")
 
     def get_client(self):
-        """Get or initialize the Gemini client"""
         if self.client is None:
             if not self.api_key:
                 raise ValueError("GEMINI_API_KEY not set")
@@ -52,9 +43,6 @@ class AIFeatures:
         return self.client
 
     def conversational_ai(self, message: str, context: str = "general") -> str:
-        """
-        Conversational AI - General purpose chatbot
-        """
         try:
             client = self.get_client()
 
@@ -102,9 +90,6 @@ Provide a helpful, conversational response:"""
             return f"Error in conversational AI: {str(e)}"
 
     def customer_service_bot(self, query: str, company_context: str = "") -> str:
-        """
-        Customer Service Bot - Specialized for customer support
-        """
         try:
             client = self.get_client()
 
@@ -127,9 +112,6 @@ Provide a helpful, professional, and empathetic response addressing the customer
             return f"Error in customer service bot: {str(e)}"
 
     def educational_assistant(self, topic: str, question: str, level: str = "intermediate") -> str:
-        """
-        Educational Assistant - Helps with learning and education
-        """
         try:
             client = self.get_client()
 
@@ -175,9 +157,6 @@ Provide an expert-level response with specific details, facts, and insights:"""
             return f"Error in domain expert: {str(e)}"
 
     def story_writer(self, prompt: str, genre: str = "general", length: str = "medium") -> str:
-        """
-        Story Writer - Create creative stories
-        """
         try:
             client = self.get_client()
 
@@ -207,9 +186,6 @@ Write an engaging, well-structured story:"""
             return f"Error in story writer: {str(e)}"
 
     def content_creator(self, topic: str, content_type: str = "blog post", tone: str = "professional") -> str:
-        """
-        Content Creator - Generate various types of content
-        """
         try:
             client = self.get_client()
 
@@ -259,9 +235,6 @@ Write a well-researched, informative article with proper structure (introduction
             return f"Error in article generator: {str(e)}"
 
     def copywriting_assistant(self, product: str, goal: str = "persuade") -> str:
-        """
-        Copywriting Assistant - Create persuasive marketing copy
-        """
         try:
             client = self.get_client()
 
@@ -283,9 +256,6 @@ Write compelling marketing copy that engages and converts. Include headlines, bo
             return f"Error in copywriting assistant: {str(e)}"
 
     def technical_writer(self, topic: str, audience: str = "technical") -> str:
-        """
-        Technical Writer - Create technical documentation
-        """
         try:
             client = self.get_client()
 
@@ -307,9 +277,6 @@ Write comprehensive technical documentation with clear explanations, examples, a
             return f"Error in technical writer: {str(e)}"
 
     def text_translator(self, text: str, target_language: str, source_language: str = "auto") -> str:
-        """
-        Text Translator - Translate text between languages
-        """
         try:
             client = self.get_client()
 
@@ -361,9 +328,6 @@ Return the analysis in JSON format:"""
             return f"Error in sentiment analysis: {str(e)}"
 
     def text_summarizer(self, text: str, length: str = "medium") -> str:
-        """
-        Text Summarizer - Create summaries of long text
-        """
         try:
             client = self.get_client()
 
@@ -391,9 +355,6 @@ Summary:"""
             return f"Error in text summarizer: {str(e)}"
 
     def language_detector(self, text: str) -> str:
-        """
-        Language Detector - Identify the language of text
-        """
         try:
             client = self.get_client()
 
@@ -414,9 +375,6 @@ Response format: Language Name (ISO Code) - Confidence Level"""
             return f"Error in language detector: {str(e)}"
 
     def content_moderator(self, text: str) -> str:
-        """
-        Content Moderator - Check content for inappropriate material
-        """
         try:
             client = self.get_client()
 
@@ -444,9 +402,6 @@ Provide a moderation report in JSON format:"""
             return f"Error in content moderator: {str(e)}"
 
     def image_description_generator(self, concept: str, style: str = "realistic") -> str:
-        """
-        AI Art Creator - Generate detailed image descriptions for AI art
-        """
         try:
             client = self.get_client()
 
@@ -499,9 +454,6 @@ Describe how the content should be transformed in the specified style:"""
             return f"Error in style transfer: {str(e)}"
 
     def analyze_data_patterns(self, data_description: str) -> str:
-        """
-        Pattern Recognition - Analyze patterns in data
-        """
         try:
             client = self.get_client()
 
@@ -559,9 +511,6 @@ Provide comprehensive trend analysis:"""
             return f"Error in trend analysis: {str(e)}"
 
     def predictive_modeling(self, scenario: str, variables: Optional[List[str]] = None) -> str:
-        """
-        Predictive Modeling - Make predictions based on scenarios
-        """
         try:
             client = self.get_client()
 
@@ -592,9 +541,6 @@ Detailed prediction:"""
             return f"Error in predictive modeling: {str(e)}"
 
     def data_insights(self, data_description: str) -> str:
-        """
-        Data Insights - Extract actionable insights from data
-        """
         try:
             client = self.get_client()
 
@@ -621,9 +567,6 @@ Generate comprehensive insights:"""
             return f"Error in data insights: {str(e)}"
 
     def statistical_analysis(self, data_description: str) -> str:
-        """
-        Statistical Analysis - Perform statistical analysis
-        """
         try:
             client = self.get_client()
 
@@ -651,9 +594,6 @@ Detailed statistical analysis:"""
             return f"Error in statistical analysis: {str(e)}"
 
     def image_recognition_guide(self, image_description: str) -> str:
-        """
-        Image Recognition - Guide for recognizing objects in images
-        """
         try:
             client = self.get_client()
 
@@ -680,9 +620,6 @@ Image recognition guidance:"""
             return f"Error in image recognition: {str(e)}"
 
     def object_detection_guide(self, scenario: str) -> str:
-        """
-        Object Detection - Guide for detecting specific objects
-        """
         try:
             client = self.get_client()
 
@@ -710,9 +647,6 @@ Object detection guide:"""
             return f"Error in object detection: {str(e)}"
 
     def scene_analysis_guide(self, scene_type: str) -> str:
-        """
-        Scene Analysis - Analyze and understand scenes
-        """
         try:
             client = self.get_client()
 
@@ -740,9 +674,6 @@ Scene analysis guide:"""
             return f"Error in scene analysis: {str(e)}"
 
     def generate_speech_text(self, topic: str, duration_minutes: int = 5, tone: str = "professional") -> str:
-        """
-        Voice Synthesis Content - Generate text for speech synthesis
-        """
         try:
             client = self.get_client()
 
@@ -771,9 +702,6 @@ Speech script:"""
             return f"Error in speech text generation: {str(e)}"
 
     def audio_analysis_guide(self, audio_type: str) -> str:
-        """
-        Audio Analysis - Guide for analyzing audio content
-        """
         try:
             client = self.get_client()
 
@@ -821,7 +749,6 @@ Conversion guide:"""
             return f"Error in format converter: {str(e)}"
 
     def codec_transformer(self, source_codec: str, target_codec: str) -> str:
-        """Audio/Video Conversion - Codec Transformer"""
         try:
             client = self.get_client()
             prompt = f"""Explain how to transform media from {source_codec} codec to {target_codec} codec.
@@ -895,7 +822,6 @@ Resolution change guide:"""
             return f"Error in resolution changer: {str(e)}"
 
     def media_trimmer(self, media_type: str, trim_specification: str) -> str:
-        """Audio/Video Editing - Trimmer"""
         try:
             client = self.get_client()
             prompt = f"""Provide trimming guidance for {media_type}.
@@ -1073,7 +999,6 @@ Batch compression guide:"""
             return f"Error in batch compression: {str(e)}"
 
     def format_specific_compression(self, format_name: str) -> str:
-        """Audio/Video Compression - Format-Specific Compression"""
         try:
             client = self.get_client()
             prompt = f"""Format-specific compression guide for {format_name}.
@@ -1149,7 +1074,6 @@ Quality analysis guide:"""
             return f"Error in quality analyzer: {str(e)}"
 
     def duration_calculator(self, calculation_task: str) -> str:
-        """Audio/Video Analysis - Duration Calculator"""
         try:
             client = self.get_client()
             prompt = f"""Duration calculation guidance.
@@ -1766,7 +1690,6 @@ File renaming guide:"""
             return f"Error in file renamer: {str(e)}"
 
     def media_duplicate_finder(self, search_criteria: str) -> str:
-        """Media Utilities - Duplicate Finder"""
         try:
             client = self.get_client()
             prompt = f"""Media duplicate finding guidance.
@@ -1786,9 +1709,6 @@ Duplicate finding guide:"""
             return f"Error in duplicate finder: {str(e)}"
 
     def list_ai_features(self) -> dict:
-        """
-        List all available AI features organized by category
-        """
         return {
             "Chatbots": [
                 "conversational_ai - General purpose conversational AI",
