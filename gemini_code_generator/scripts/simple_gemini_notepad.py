@@ -1,8 +1,3 @@
-"""
-Simple Gemini to Notepad - Quick Code Generation
-Ultra-simple script to generate code and write it to Notepad with full screen
-"""
-
 import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'modules', 'ai_features'))
@@ -12,8 +7,6 @@ from code_generator import generate_code
 from notepad_writer import write_code_to_notepad, write_letter_to_notepad
 
 def generate_and_write(description, fullscreen=True):
-    """Generate code/letter with Gemini and write to Notepad in full screen"""
-
     print(f"🤖 Generating content: {description}...")
 
     result = generate_code(description)
@@ -47,3 +40,4 @@ def generate_and_write(description, fullscreen=True):
 if __name__ == "__main__":
     description = input("What code do you want to generate? ")
     generate_and_write(description)
+
