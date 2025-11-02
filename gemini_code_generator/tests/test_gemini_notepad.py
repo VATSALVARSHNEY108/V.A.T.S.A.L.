@@ -1,21 +1,9 @@
-"""
-Test Gemini Code Generation with Auto Notepad Writing
-This script demonstrates how to generate code with Gemini and automatically write it to Notepad
-"""
-
 from code_generator import generate_code
 import subprocess
 import time
 import pyperclip
 
 def test_code_generation_to_notepad(description, language=None):
-    """
-    Generate code using Gemini and automatically write it to Notepad
-    
-    Args:
-        description: What code you want to generate
-        language: Programming language (auto-detected if not provided)
-    """
     print("="*70)
     print("🚀 GEMINI CODE GENERATOR → NOTEPAD AUTOMATION TEST")
     print("="*70)
