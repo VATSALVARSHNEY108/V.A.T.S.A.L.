@@ -12,12 +12,10 @@ import pyautogui
 
 
 def clear_screen():
-    """Clear console screen"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def print_header():
-    """Print demo header"""
     print("\n" + "=" * 80)
     print(" " * 20 + "🤖 GEMINI AI → NOTEPAD CODE WRITER 🤖")
     print("=" * 80)
@@ -25,9 +23,6 @@ def print_header():
 
 
 def demo_code_generation(description, language=None):
-    """
-    Complete demo: Generate code with Gemini and write to Notepad
-    """
     print("=" * 80)
     print(f"📝 REQUEST: {description}")
     if language:
@@ -100,7 +95,6 @@ def demo_code_generation(description, language=None):
 
 
 def run_demo():
-    """Run the complete demonstration"""
     clear_screen()
     print_header()
 
@@ -165,3 +159,4 @@ if __name__ == "__main__":
         print("\n\n👋 Demo interrupted. Goodbye!\n")
     except Exception as e:
         print(f"\n❌ Unexpected error: {e}\n")
+
