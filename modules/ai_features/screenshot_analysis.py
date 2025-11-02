@@ -1,8 +1,3 @@
-"""
-AI Screenshot Analysis Module
-Analyze screenshots with AI vision and provide intelligent insights
-"""
-
 import os
 import subprocess
 import platform
@@ -14,10 +9,7 @@ import pyautogui
 
 
 class ScreenshotAnalyzer:
-    """AI-powered screenshot analyzer with vision capabilities"""
-
     def __init__(self):
-        """Initialize screenshot analyzer"""
         self.api_key = os.environ.get("GEMINI_API_KEY")
         self.client = None
         if self.api_key:
@@ -27,16 +19,6 @@ class ScreenshotAnalyzer:
                 print(f"⚠️ Could not initialize Gemini: {e}")
 
     def analyze(self, image_path: str, prompt: str = "Describe what you see in this image") -> str:
-        """
-        Analyze a screenshot using AI vision
-
-        Args:
-            image_path: Path to the screenshot
-            prompt: What to analyze
-
-        Returns:
-            Analysis result
-        """
         if not self.client:
             return "❌ AI Vision not available - GEMINI_API_KEY not set"
 
@@ -64,7 +46,6 @@ class ScreenshotAnalyzer:
             return f"❌ Error analyzing screenshot: {str(e)}"
 
     def suggest_improvements(self, image_path: str) -> str:
-        """Suggest UI/UX improvements for screenshot"""
         prompt = """Analyze this screenshot and suggest 3-5 actionable improvements:
 
 1. **UI/UX Issues**: Buttons, labels, contrast, accessibility
@@ -82,7 +63,6 @@ Format:
         return self.analyze(image_path, prompt)
 
     def find_errors(self, image_path: str) -> str:
-        """Find errors and issues in screenshot"""
         prompt = """Look for errors, bugs, or problems:
 
 1. **Visible Errors**: Error messages, warnings, broken images
@@ -101,11 +81,9 @@ If no issues: "No visible errors detected ✅" """
         return self.analyze(image_path, prompt)
 
     def extract_text(self, image_path: str) -> str:
-        """Extract all text from screenshot (OCR)"""
         return self.analyze(image_path, "Extract all visible text from this image. List each piece of text.")
 
     def analyze_code(self, image_path: str) -> str:
-        """Analyze code visible in screenshot"""
         prompt = """Analyze the code in this screenshot:
 
 1. Programming language
@@ -119,7 +97,6 @@ If no code visible: "No code detected" """
         return self.analyze(image_path, prompt)
 
     def analyze_design(self, image_path: str) -> str:
-        """Analyze design and UI elements"""
         prompt = """Analyze the design/UI:
 
 1. Type of design/interface
@@ -132,20 +109,10 @@ If no design work: "No design detected" """
         return self.analyze(image_path, prompt)
 
     def get_quick_tips(self, image_path: str) -> str:
-        """Get quick tips about the screenshot"""
         prompt = "Provide 3 quick, actionable tips about what's shown in this screenshot"
         return self.analyze(image_path, prompt)
 
     def take_screenshot(self, save_path: str = "screenshots/current_screen.png") -> str:
-        """
-        Take a screenshot of the current screen
-
-        Args:
-            save_path: Path where to save the screenshot
-
-        Returns:
-            Path to the saved screenshot
-        """
         try:
             # Create screenshots directory if it doesn't exist
             os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -160,15 +127,6 @@ If no design work: "No design detected" """
             return ""
 
     def detect_app_from_screenshot(self, image_path: str) -> Dict[str, Any]:
-        """
-        Detect which application is visible in the screenshot
-
-        Args:
-            image_path: Path to the screenshot
-
-        Returns:
-            Dictionary with app name, type, and confidence
-        """
         if not self.client:
             return {"app_name": "Unknown", "error": "AI not available"}
 
@@ -223,16 +181,6 @@ If no design work: "No design detected" """
         return app_info
 
     def open_app_fullscreen(self, app_name: str, force_fullscreen: bool = True) -> str:
-        """
-        Open an application in fullscreen mode
-
-        Args:
-            app_name: Name of the application to open
-            force_fullscreen: Whether to force fullscreen after opening
-
-        Returns:
-            Status message
-        """
         system = platform.system()
 
         try:
@@ -302,12 +250,6 @@ If no design work: "No design detected" """
             return f"❌ Error opening {app_name}: {str(e)}"
 
     def _make_fullscreen(self, system: str):
-        """
-        Make the current active window fullscreen
-
-        Args:
-            system: Operating system name
-        """
         try:
             if system == "Windows":
                 # F11 for fullscreen in most apps
@@ -324,15 +266,6 @@ If no design work: "No design detected" """
             print(f"⚠️ Could not make fullscreen: {e}")
 
     def analyze_and_open_fullscreen(self, screenshot_path: Optional[str] = None) -> str:
-        """
-        Analyze current screen or provided screenshot and open the detected app in fullscreen
-
-        Args:
-            screenshot_path: Optional path to screenshot. If None, takes a new screenshot
-
-        Returns:
-            Status message with analysis and action taken
-        """
         # Take screenshot if not provided
         if not screenshot_path:
             screenshot_path = self.take_screenshot()
@@ -364,16 +297,6 @@ If no design work: "No design detected" """
         return message
 
     def ensure_app_fullscreen(self, app_name: str) -> str:
-        """
-        Ensure an app is open and in fullscreen before controlling it
-        This should be called before any automation/control operations
-
-        Args:
-            app_name: Name of the app to ensure is fullscreen
-
-        Returns:
-            Status message
-        """
         print(f"🔍 Ensuring {app_name} is open in fullscreen...")
 
         # Open the app in fullscreen
@@ -385,24 +308,9 @@ If no design work: "No design detected" """
         return result
 
     def control_notepad_fullscreen(self) -> str:
-        """
-        Open Notepad in fullscreen before controlling it
-
-        Returns:
-            Status message
-        """
         return self.ensure_app_fullscreen("notepad")
 
     def control_browser_fullscreen(self, browser: str = "chrome") -> str:
-        """
-        Open browser in fullscreen before controlling it
-
-        Args:
-            browser: Browser name (chrome, firefox, edge, safari)
-
-        Returns:
-            Status message
-        """
         valid_browsers = ["chrome", "firefox", "edge", "safari"]
         if browser.lower() not in valid_browsers:
             return f"❌ Invalid browser. Choose from: {', '.join(valid_browsers)}"
@@ -410,16 +318,6 @@ If no design work: "No design detected" """
         return self.ensure_app_fullscreen(browser)
 
     def control_youtube_fullscreen(self, browser: str = "chrome", youtube_url: str = "https://youtube.com") -> str:
-        """
-        Open YouTube in a browser in fullscreen mode
-
-        Args:
-            browser: Browser to use (default: chrome)
-            youtube_url: YouTube URL to open (default: youtube.com)
-
-        Returns:
-            Status message
-        """
         system = platform.system()
 
         # First ensure browser is in fullscreen
@@ -443,142 +341,71 @@ If no design work: "No design detected" """
 
 
 def create_screenshot_analyzer() -> ScreenshotAnalyzer:
-    """Factory function to create ScreenshotAnalyzer instance"""
     return ScreenshotAnalyzer()
 
 
 # Standalone functions for backward compatibility
 def analyze_screenshot(image_path: str, prompt: str = "Describe what you see") -> str:
-    """Analyze a screenshot"""
     analyzer = create_screenshot_analyzer()
     return analyzer.analyze(image_path, prompt)
 
 
 def suggest_improvements(image_path: str) -> str:
-    """Suggest improvements for screenshot"""
     analyzer = create_screenshot_analyzer()
     return analyzer.suggest_improvements(image_path)
 
 
 def analyze_screen_for_errors(image_path: str) -> str:
-    """Find errors in screenshot"""
     analyzer = create_screenshot_analyzer()
     return analyzer.find_errors(image_path)
 
 
 def get_quick_tips(image_path: str) -> str:
-    """Get quick tips"""
     analyzer = create_screenshot_analyzer()
     return analyzer.get_quick_tips(image_path)
 
 
 def analyze_code_on_screen(image_path: str) -> str:
-    """Analyze code in screenshot"""
     analyzer = create_screenshot_analyzer()
     return analyzer.analyze_code(image_path)
 
 
 def analyze_website_design(image_path: str) -> str:
-    """Analyze website design"""
     analyzer = create_screenshot_analyzer()
     return analyzer.analyze_design(image_path)
 
 
 def open_app_in_fullscreen(app_name: str, force_fullscreen: bool = True) -> str:
-    """
-    Open an application in fullscreen mode
-
-    Args:
-        app_name: Name of the application (e.g., 'chrome', 'notepad', 'calculator')
-        force_fullscreen: Whether to force fullscreen mode (default: True)
-
-    Returns:
-        Status message
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.open_app_fullscreen(app_name, force_fullscreen)
 
 
 def detect_app_and_open_fullscreen(screenshot_path: Optional[str] = None) -> str:
-    """
-    Detect app from screenshot and open it in fullscreen mode
-
-    Args:
-        screenshot_path: Optional path to screenshot. If None, takes a new screenshot
-
-    Returns:
-        Status message with analysis and action
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.analyze_and_open_fullscreen(screenshot_path)
 
 
 def take_current_screenshot(save_path: str = "screenshots/current_screen.png") -> str:
-    """
-    Take a screenshot of the current screen
-
-    Args:
-        save_path: Where to save the screenshot
-
-    Returns:
-        Path to saved screenshot
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.take_screenshot(save_path)
 
 
 def control_notepad_fullscreen() -> str:
-    """
-    Open Notepad in fullscreen mode before controlling it
-    Use this before any Notepad automation
-
-    Returns:
-        Status message
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.control_notepad_fullscreen()
 
 
 def control_browser_fullscreen(browser: str = "chrome") -> str:
-    """
-    Open browser in fullscreen mode before controlling it
-    Use this before any browser automation
-
-    Args:
-        browser: Browser name (chrome, firefox, edge, safari)
-
-    Returns:
-        Status message
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.control_browser_fullscreen(browser)
 
 
 def control_youtube_fullscreen(browser: str = "chrome", youtube_url: str = "https://youtube.com") -> str:
-    """
-    Open YouTube in fullscreen browser
-
-    Args:
-        browser: Browser to use (default: chrome)
-        youtube_url: YouTube URL to open
-
-    Returns:
-        Status message
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.control_youtube_fullscreen(browser, youtube_url)
 
 
 def ensure_app_fullscreen(app_name: str) -> str:
-    """
-    Ensure any app is open and fullscreen before controlling it
-
-    Args:
-        app_name: Name of the app (notepad, chrome, calculator, etc.)
-
-    Returns:
-        Status message
-    """
     analyzer = create_screenshot_analyzer()
     return analyzer.ensure_app_fullscreen(app_name)
 
@@ -619,3 +446,4 @@ if __name__ == "__main__":
     else:
         print(f"Unknown command: {command}")
         sys.exit(1)
+
