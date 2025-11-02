@@ -1,8 +1,3 @@
-"""
-Unified Multi-Modal AI System
-Seamlessly combines Vision + Voice + Text inputs for intelligent understanding
-"""
-
 import os
 import json
 import base64
@@ -13,8 +8,6 @@ from modules.automation.gui_automation import GUIAutomation
 
 
 class MultiModalInput:
-    """Represents a multi-modal input combining vision, voice, and text"""
-
     def __init__(self, text: Optional[str] = None,
                  voice_transcript: Optional[str] = None,
                  screenshot_path: Optional[str] = None,
@@ -27,7 +20,6 @@ class MultiModalInput:
         self.modalities_used = self._identify_modalities()
 
     def _identify_modalities(self) -> List[str]:
-        """Identify which modalities are present"""
         modalities = []
         if self.text:
             modalities.append("text")
@@ -38,15 +30,12 @@ class MultiModalInput:
         return modalities
 
     def get_primary_input(self) -> str:
-        """Get the primary text input (voice or text)"""
         return self.voice_transcript or self.text or ""
 
     def has_vision(self) -> bool:
-        """Check if vision input is available"""
         return bool(self.screenshot_path and os.path.exists(self.screenshot_path))
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary for storage"""
         return {
             "text": self.text,
             "voice_transcript": self.voice_transcript,
@@ -58,17 +47,6 @@ class MultiModalInput:
 
 
 class MultiModalAI:
-    """
-    Unified Multi-Modal AI System
-
-    Combines vision, voice, and text inputs for coherent understanding
-    Features:
-    - Seamless integration of all modalities
-    - Context-aware processing
-    - Intelligent routing
-    - Cross-modal understanding
-    """
-
     def __init__(self):
         self.api_key = os.environ.get("GEMINI_API_KEY")
         self.client = None
@@ -85,7 +63,6 @@ class MultiModalAI:
         print("🧠 Multi-Modal AI System initialized")
 
     def _load_history(self) -> List[Dict]:
-        """Load multi-modal interaction history"""
         if os.path.exists(self.history_file):
             try:
                 with open(self.history_file, 'r') as f:
@@ -95,7 +72,6 @@ class MultiModalAI:
         return []
 
     def _save_history(self):
-        """Save interaction history"""
         try:
             with open(self.history_file, 'w') as f:
                 json.dump(self.history[-100:], f, indent=2)
@@ -103,15 +79,6 @@ class MultiModalAI:
             print(f"Error saving multimodal history: {e}")
 
     def process(self, input_data: MultiModalInput) -> Dict:
-        """
-        Process multi-modal input and generate intelligent response
-
-        Args:
-            input_data: MultiModalInput object containing various modalities
-
-        Returns:
-            Dict with analysis, understanding, and recommended actions
-        """
         print(f"\n🧠 Processing Multi-Modal Input (Modalities: {', '.join(input_data.modalities_used)})")
 
         if not self.client:
@@ -150,11 +117,6 @@ class MultiModalAI:
             }
 
     def _analyze_multimodal(self, input_data: MultiModalInput) -> Dict:
-        """
-        Core multi-modal analysis using Gemini AI
-        Combines all available modalities for comprehensive understanding
-        """
-
         primary_text = input_data.get_primary_input()
 
         if input_data.has_vision():
@@ -163,8 +125,6 @@ class MultiModalAI:
             return self._analyze_text_only(primary_text, input_data)
 
     def _analyze_with_vision(self, input_data: MultiModalInput, text: str) -> Dict:
-        """Analyze with vision + text/voice"""
-
         if not input_data.screenshot_path:
             return self._analyze_text_only(text, input_data)
 
@@ -259,8 +219,6 @@ Provide detailed, actionable analysis combining ALL modalities."""
             }
 
     def _analyze_text_only(self, text: str, input_data: MultiModalInput) -> Dict:
-        """Analyze text/voice only (no vision)"""
-
         modality = "Voice" if input_data.voice_transcript else "Text"
         audio_context_str = ""
         if input_data.audio_context:
@@ -1431,3 +1389,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
